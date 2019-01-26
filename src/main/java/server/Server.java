@@ -1,5 +1,6 @@
 package server;
 
+import server.api.QueryParams;
 import worldtime.WorldTime;
 
 import java.io.BufferedReader;
@@ -86,5 +87,11 @@ public class Server {
         WorldTime time = new WorldTime();
         info = time.showTime(input);
         return info;
+    }
+
+    private void createParams(String input) {
+        QueryParams params = new QueryParams(input);
+        params.queryFormatter();
+
     }
 }
