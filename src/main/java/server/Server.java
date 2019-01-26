@@ -1,5 +1,6 @@
 package server;
 
+import server.api.ApiUrlBuilder;
 import server.api.QueryParams;
 import worldtime.WorldTime;
 
@@ -64,6 +65,7 @@ public class Server {
 
                 String outText = getTime(input) ;
 
+
                 // Sends outText to client
                 out.println(outText);
 
@@ -83,15 +85,13 @@ public class Server {
 
     // Send time in a compact format
     public static String getTime(String input) {
+        DataHandler dh = new DataHandler(input);
+        dh.getData();
         String info;
         WorldTime time = new WorldTime();
         info = time.showTime(input);
         return info;
     }
 
-    private void createParams(String input) {
-        QueryParams params = new QueryParams(input);
-        params.queryFormatter();
 
-    }
 }

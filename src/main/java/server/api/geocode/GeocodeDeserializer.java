@@ -19,8 +19,8 @@ public class GeocodeDeserializer implements JsonDeserializer<Geocode> {
         final String[] results = new String[2];
         final String lat = jsonLocationObject.get("lat").getAsString();
         final String lng = jsonLocationObject.get("lng").getAsString();
-        results[0] = "lat " + lat;
-        results[1] = "lng " + lng;
+        results[0] = lat;
+        results[1] = lng;
 
         final String status = jsonObject.get("status").getAsString();
 

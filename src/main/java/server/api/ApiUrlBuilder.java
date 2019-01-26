@@ -1,8 +1,12 @@
 package server.api;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.StringJoiner;
+
 public class ApiUrlBuilder {
 
-    private static final String BASE_URL  = "https://maps.googleapi.com/maps/api";
+    private static final String BASE_URL  = "https://maps.googleapis.com/maps/api";
     private static final String timezone = "timezone";
     private static final String geocode = "geocode";
     private static final String jsonOutputFormat = "json";
@@ -10,7 +14,8 @@ public class ApiUrlBuilder {
 
     private String apiType;
     private String outputFormat;
-    private String parameters;
+    private String[] parameters;
+    private String apiParam;
 
     private String URL;
 
@@ -20,7 +25,7 @@ public class ApiUrlBuilder {
 
 
 
-    public ApiUrlBuilder(String apiType, String outputFormat, String parameters) {
+    public ApiUrlBuilder(String apiType, String outputFormat, String[] parameters) {
         this.apiType = apiType;
         this.outputFormat = outputFormat;
         this.parameters = parameters;
@@ -29,7 +34,7 @@ public class ApiUrlBuilder {
 
     private void urlBuilder() {
         urlVerification();
-        URL = BASE_URL + "/" + apiType + "/" + outputFormat + "?" + parameters
+        URL = BASE_URL + "/" + apiType + "/" + outputFormat + "?" + apiParam
             + "&key=" + apiKey();
 
     }
@@ -38,11 +43,31 @@ public class ApiUrlBuilder {
         apiTypeValidator();
         apiOutputFormatValidator();
         if(apiType.equals(geocode)) {
-            geocodeParamsValidator();
+            createGeocodeParam();
         }
         if(apiType.equals(timezone)) {
-            timezoneParamsValidator();
+            createTimezoneParam();
         }
+    }
+
+    private void createGeocodeParam() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < parameters.length; i++) {
+            sb.append(parameters[i]);
+        }
+        apiParam = "address=" + sb.toString();
+    }
+
+    private void createTimezoneParam() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < parameters.length-1; i++) {
+            sb.append(parameters[i]).append(",");
+        }
+        sb.append(parameters[parameters.length-1]);
+        Date now = new Date();
+        long time = now.getTime()/1000;
+        String timestamp = String.valueOf(time);
+        apiParam = "location=" + sb.toString() + "&timestamp="+timestamp;
     }
 
     private String apiKey() {
@@ -57,6 +82,7 @@ public class ApiUrlBuilder {
         return URL;
     }
 
+    /*
     private void geocodeParamsValidator() throws RuntimeException {
         String[] params = parameters.split("=");
         if(!params[0].equals("address")) {
@@ -72,7 +98,7 @@ public class ApiUrlBuilder {
         if(!params[1].startsWith("timestamp")) {
             throw new RuntimeException("Second parameter is not valid.");
         }
-    }
+    }*/
 
     private void apiTypeValidator() throws RuntimeException {
         if(!(apiType.equals(timezone) || apiType.equals(geocode))) {
