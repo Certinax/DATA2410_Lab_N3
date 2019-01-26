@@ -11,5 +11,5 @@ This project contains both client and server side of a timezone service.
     
 #### API used:
 
-    * Google geocode API
-    * Google timezone API
+* Google geocode API
+* Google timezone API
