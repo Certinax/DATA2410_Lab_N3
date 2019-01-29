@@ -2,6 +2,7 @@ package client;
 
 import java.net.*;
 import java.io.*;
+import java.util.Date;
 
 public class Client {
     public static void main(String[] args) {
@@ -36,11 +37,23 @@ public class Client {
             String userIn;
 
             while((userIn = keys.readLine()) != null && !userIn.isEmpty()) {
-                out.println(userIn);
+
+                Date now = new Date();
+                long time = now.getTime()/1000;
+                String timestamp = String.valueOf(time);
+
+                out.println(userIn + "&timestamp="+timestamp);
 
                 String recieved = in.readLine();
 
-                System.out.println("Response: " + recieved);
+                if(recieved.matches("^[1-9][0-9]{9}$")){
+                    long targetTime = Long.valueOf(recieved);
+                    Date targetDate = new Date(targetTime*1000);
+                    System.out.println("Response: " + "\nLocal time in " + userIn + ":" + targetDate);
+                } else {
+                    System.out.println("Response: " + recieved);
+                }
+
                 //System.out.println("Response: " + clientSocket.getLocalAddress().getHostAddress() + ": Localport: " + clientSocket.getLocalPort());
 
             }

@@ -1,33 +1,52 @@
 package server;
 
 import server.api.ApiUrlBuilder;
-import server.api.QueryParams;
+import server.api.connection.Connection;
+import server.api.timezone.Timezone;
+
+import java.net.ConnectException;
 
 public class DataHandler {
 
-    private String input;
-    private String params;
-    private String url;
+    private String URL;
 
-    public DataHandler(String input) {
-        this.input = input;
+
+    public DataHandler(String URL) {
+        this.URL = URL;
     }
+
+
+    public String[] geocodeConnection() {
+        String[] latlong = new String[2];
+        try {
+            Connection geoConnect = new Connection("geocode");
+            geoConnect.connector(URL);
+            for (int i = 0; i < geoConnect.geocodeReader().getResults().length; i++) {
+                latlong[i] = geoConnect.geocodeReader().getResults()[i];
+            }
+        } catch (Exception e) {
+            System.out.println("Something's wrong with geocode API connection in DataHandler" + e.getMessage());
+            return null;
+        }
+        return latlong;
+    }
+
+
+    public Timezone timezoneConnection(String[] latlong, String timestamp) {
+        Timezone timezone = null;
+        try {
+            ApiUrlBuilder timezoneURL = new ApiUrlBuilder("timezone", "json", latlong, timestamp);
+            Connection timezoneConnect = new Connection("timezone");
+            timezoneConnect.connector(timezoneURL.getURL());
+            timezone = timezoneConnect.timezoneReader();
+        } catch (Exception e) {
+            System.out.println("Something's wrong with timzeone API connection in DataHandler");
+        }
+        return timezone;
+    }
+
 
     public String getData() {
-        params = createParams(input);
-        url = createGeocodeUrl(params);
-        return url;
-    }
-
-    private String createParams(String client_input) {
-        QueryParams client_params = new QueryParams(client_input);
-        return client_params.queryFormatter();
-    }
-
-    private String createGeocodeUrl(String apiParams) {
-        String[] paramQuery = new String[1];
-        paramQuery[0] = apiParams;
-        ApiUrlBuilder url = new ApiUrlBuilder("geocode", "json", paramQuery);
-        return url.getURL();
+        return "";
     }
 }

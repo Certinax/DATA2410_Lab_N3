@@ -1,7 +1,7 @@
 package server;
 
-import server.api.ApiUrlBuilder;
-import server.api.QueryParams;
+import server.api.connection.Connection;
+import server.api.timezone.Timezone;
 import worldtime.WorldTime;
 
 import java.io.BufferedReader;
@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Server {
 
@@ -85,12 +84,22 @@ public class Server {
 
     // Send time in a compact format
     public static String getTime(String input) {
-        DataHandler dh = new DataHandler(input);
-        dh.getData();
-        String info;
-        WorldTime time = new WorldTime();
-        info = time.showTime(input);
-        return info;
+        String response = "";
+        InputHandler ih = new InputHandler(input);
+        String connectionUrl = ih.getData();
+        DataHandler dh = new DataHandler(connectionUrl);
+        String[] latlong = dh.geocodeConnection();
+
+        if(latlong == null) {
+            return "We cannot find the location you are searching for.";
+        }
+
+        Timezone timezone = dh.timezoneConnection(latlong, ih.getClient_timestamp());
+        TimezoneHandler th = new TimezoneHandler(timezone, ih.getClient_timestamp());
+        if(th.getTime() != null) {
+            response = th.getTime();
+        }
+        return response;
     }
 
 

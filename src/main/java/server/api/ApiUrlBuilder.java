@@ -16,6 +16,7 @@ public class ApiUrlBuilder {
     private String outputFormat;
     private String[] parameters;
     private String apiParam;
+    private String timestamp;
 
     private String URL;
 
@@ -29,6 +30,14 @@ public class ApiUrlBuilder {
         this.apiType = apiType;
         this.outputFormat = outputFormat;
         this.parameters = parameters;
+        urlBuilder();
+    }
+
+    public ApiUrlBuilder(String apiType, String outputFormat, String[] parameters, String timestamp) {
+        this.apiType = apiType;
+        this.outputFormat = outputFormat;
+        this.parameters = parameters;
+        this.timestamp = timestamp;
         urlBuilder();
     }
 
@@ -64,9 +73,9 @@ public class ApiUrlBuilder {
             sb.append(parameters[i]).append(",");
         }
         sb.append(parameters[parameters.length-1]);
-        Date now = new Date();
+        /*Date now = new Date();
         long time = now.getTime()/1000;
-        String timestamp = String.valueOf(time);
+        String timestamp = String.valueOf(time);*/
         apiParam = "location=" + sb.toString() + "&timestamp="+timestamp;
     }
 
