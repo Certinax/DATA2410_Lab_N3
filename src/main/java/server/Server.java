@@ -23,8 +23,7 @@ public class Server {
         if (args.length > 0) {
             if (args.length == 1)
                 port = Integer.parseInt(args[0]);
-            else
-            {
+            else {
                 System.err.println("ERROR: Feil i input-parameter");
                 System.exit(1);
             }
@@ -32,19 +31,19 @@ public class Server {
 
         System.out.println("Server up and running - TCP");
 
-        try(
+        try (
                 // Create the server socket.
                 ServerSocket serverSocket = new ServerSocket(port);
 
-                // Start listening on the socket.
-                Socket socket = serverSocket.accept();
-        ) {
 
-            // Get clients address;
-            InetAddress clientIP = socket.getInetAddress();
-            // Get clients port
-            int clientPort = socket.getPort();
-            // Input from client
+        ) {
+            while (true) {
+                // create and start a new ClientServer thread for each connected client
+                ClientHandler client = new ClientHandler(serverSocket.accept());
+                client.start();
+            }
+        } catch (IOException e) {
+            System.out.println("ERROR");
         }
     }
 }
