@@ -14,8 +14,6 @@ public class ClientHandler extends Thread {
     public ClientHandler(Socket socket) {
         this.socket = socket;
         clientAddr = socket.getInetAddress();
-
-        //
         clientPort = socket.getPort();
         serverPort = socket.getLocalPort();
     }
@@ -34,7 +32,7 @@ public class ClientHandler extends Thread {
 
 
             while ((input = in.readLine()) != null) {
-                System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
+                System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + input);
 
 
                 System.out.println("Input from client: " + input);
@@ -55,9 +53,6 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             // skriv ut feilmelding
         }
-
-
-
     }
 
 
