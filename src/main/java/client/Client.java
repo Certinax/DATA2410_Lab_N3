@@ -54,8 +54,6 @@ public class Client {
                     System.out.println("Response: " + recieved);
                 }
 
-                //System.out.println("Response: " + clientSocket.getLocalAddress().getHostAddress() + ": Localport: " + clientSocket.getLocalPort());
-
             }
 
         } catch (UnknownHostException e) {
