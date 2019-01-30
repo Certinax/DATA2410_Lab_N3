@@ -35,6 +35,7 @@ public class Client {
                 )
         {
             String userIn;
+            System.out.print("Skriv inn by eller land: ");
 
             while((userIn = keys.readLine()) != null && !userIn.isEmpty()) {
 
@@ -49,10 +50,12 @@ public class Client {
                 if(recieved.matches("^[1-9][0-9]{9}$")){
                     long targetTime = Long.valueOf(recieved);
                     Date targetDate = new Date(targetTime*1000);
-                    System.out.println("Response: " + "\nLocal time in " + userIn + ":" + targetDate);
+                    System.out.println("Local time in " + userIn + ": " + targetDate);
                 } else {
-                    System.out.println("Response: " + recieved);
+                    System.out.println(recieved);
                 }
+                System.out.print("\nSkriv inn by eller land: ");
+
 
             }
 

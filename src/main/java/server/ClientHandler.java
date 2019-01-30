@@ -22,6 +22,7 @@ public class ClientHandler extends Thread {
     public void run() {
         try
         (
+
                 // Data back to client
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -32,7 +33,7 @@ public class ClientHandler extends Thread {
 
 
             while ((input = in.readLine()) != null) {
-                System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + input);
+                System.out.println("\nClient [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + input);
 
 
                 System.out.println("Input from client: " + input);
