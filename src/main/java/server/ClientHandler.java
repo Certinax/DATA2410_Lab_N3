@@ -28,31 +28,32 @@ public class ClientHandler extends Thread {
 
                 // In data from client
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
         ) {
             String input;
 
 
             while ((input = in.readLine()) != null) {
-                System.out.println("\nClient [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + input);
+                System.out.println("\nClient [" + clientAddr.getHostAddress() +  ":" + clientPort +"] ");
 
 
                 System.out.println("Input from client: " + input);
 
                 // Sends input to getTime function
-
                 String outText = getTime(input) ;
 
 
                 // Sends outText to client
                 out.println(outText);
 
-                System.out.println("Retur: " + outText);
 
-                System.out.println("I (Server) [" + socket.getLocalAddress().getHostAddress() + ":" + serverPort +"] > " + outText);
+                System.out.println("SERVER retur: [" + socket.getLocalAddress().getHostAddress() + ":" + serverPort +"] " + outText);
 
             }
         } catch (IOException e) {
             // skriv ut feilmelding
+            System.out.println("ERROR" + e.getMessage());
+
         }
     }
 
