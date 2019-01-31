@@ -50,7 +50,12 @@ public class Client {
                 if(recieved.matches("^[1-9][0-9]{9}$")){
                     long targetTime = Long.valueOf(recieved);
                     Date targetDate = new Date(targetTime*1000);
-                    System.out.println("Local time in " + userIn + ": " + targetDate);
+
+                    String fDate = targetDate.toString();
+                    fDate = fDate.replace(" CET", "");
+
+
+                    System.out.println("Local time in " + userIn + ": " + fDate);
                 } else {
                     System.out.println(recieved);
                 }
