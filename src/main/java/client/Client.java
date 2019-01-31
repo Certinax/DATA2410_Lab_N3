@@ -6,7 +6,9 @@ import java.util.Date;
 
 public class Client {
     public static void main(String[] args) {
-        String hostName = "127.0.0.1";
+        // String hostName = "127.0.0.1";
+        // Håkon IP
+        String hostName = "10.253.11.146";
         int portNumber = 5555;
 
         // Checking if its only one argument
