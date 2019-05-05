@@ -27,10 +27,7 @@ public class ApiUrlBuilder {
 
 
     public ApiUrlBuilder(String apiType, String outputFormat, String[] parameters) {
-        this.apiType = apiType;
-        this.outputFormat = outputFormat;
-        this.parameters = parameters;
-        urlBuilder();
+        this(apiType, outputFormat, parameters, "");
     }
 
     public ApiUrlBuilder(String apiType, String outputFormat, String[] parameters, String timestamp) {
