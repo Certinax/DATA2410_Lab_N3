@@ -21,8 +21,8 @@ public class ApiUrlBuilder {
     private String URL;
 
     // Certinax's Private API-keys
-    private static final String geoApiKey = "AIzaSyDPs6roqPE6IYw5JPxOAMFpWD6sXyYBPqY";
-    private static final String timeZoneApiKey = "AIzaSyDPs6roqPE6IYw5JPxOAMFpWD6sXyYBPqY";
+    private static final String geoApiKey = "add_KEY";
+    private static final String timeZoneApiKey = "add_KEY";
 
 
 
